@@ -9,7 +9,7 @@
 }
 testFunc(10, false, "google");
 //////////////////////////////////////////////////////////////////////
-/*Task-2
+/*Task-2 (внизу пример с литералами в тернарке)
 Объявите функцию userInfo, которая выводит в консоль:
 свойство "Дата регистрации: " + свойство data контекста вызова, если свойство registered имеет значение true
 сообщение "Незарегистрированный пользователь: " + свойство name в противном случае
@@ -44,8 +44,16 @@ var userSecond = {
 
 console.log(userFirst.getInfo());
 console.log(userSecond.getInfo());
+
+
+////////////////////////////////////////////////
+// Исправлено с тернаркой и литералами.....
+function userInfo() {
+  console.log ( this.registered ? `Дата регистрации: ${this.data}`
+       : `Незарегистрированный пользователь: ${this.name}` )
+}
 //////////////////////////////////////////////////////////////////////////////
-/*Task-3
+/*Task-3(исправлено...Действительно!!! код получился намного короче)
 Есть три объекта: users, posts и comments.
 Написать код функции getPostComments ( postId ),
 которая возвращает массив всех комментариев к посту
@@ -111,35 +119,19 @@ var comments = {
                         or null if the element is not in a namespace`
         }
 }
-function getCurrentPostComments ( postId ) {
-	var res = [];
 
-	for (var keyPost in posts ) {
+    function getCurrentPostComments(postId) {
+      var res = [];
+      for (var keyComment in comments)
 
-		if ( parseInt(keyPost, 10) === postId ) {
+      if (comments[keyComment].postId === postId)
+      res.push ({
+      author: users[ comments[keyComment].author ].name,
+      text: comments[ keyComment ].text
+       });
 
-			for ( var keyComment in comments ) {
+      return res;
+      };
 
-				if ( comments[keyComment].postId === postId ) {
-
-					var authorNameComment = {};
-
-					for ( var keyUser in users ) {
-
-						if ( parseInt(keyUser, 10) === comments[keyComment].author ) {
-							authorNameComment.author = users[keyUser].name
-						}
-					};
-
-					authorNameComment.text = comments[keyComment].text;
-					res.push(authorNameComment);
-				}
-			}
-		}
-	};
-
-	return res;
-};
-
-console.log ( getCurrentPostComments(7891451) )
+      console.log ( getCurrentPostComments(7891451) )
 //////////////////////////////////////////////////////////////////////////////////
